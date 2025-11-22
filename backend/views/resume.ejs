@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Resume PDF</title>
+    <style>
+        /* Inline styles to ensure puppeteer prints correctly. Tweak to match Template01. */
+        :root {
+            --sidebar-bg: #111827;
+            /* gray-800 */
+            --accent: #3b82f6;
+            --muted: #6b7280;
+            --text: #111827;
+            --white: #ffffff;
+            --left-width: 30%;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: #ffffff;
+            color: var(--text);
+        }
+
+        .page {
+            width: 794px;
+            min-height: 1123px;
+            display: flex;
+            box-sizing: border-box;
+        }
+
+        .sidebar {
+            width: calc(var(--left-width));
+            background: var(--sidebar-bg);
+            color: var(--white);
+            padding: 28px;
+            box-sizing: border-box;
+        }
+
+        .photo {
+            width: 144px;
+            height: 144px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e5e7eb;
+            margin: 0 auto 16px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebar .section {
+            margin-top: 20px;
+        }
+
+        .sidebar .section h4 {
+            font-size: 12px;
+            color: #d1d5db;
+            margin: 0 0 8px 0;
+            letter-spacing: 1px;
+        }
+
+        .sidebar .section p,
+        .sidebar .section li {
+            font-size: 12px;
+            color: #e5e7eb;
+            margin: 3px 0;
+        }
+
+        .content {
+            width: calc(100% - var(--left-width));
+            padding: 36px;
+            box-sizing: border-box;
+        }
+
+        .name {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .title {
+            font-size: 16px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 16px 0 24px 0;
+            opacity: 0.6;
+        }
+
+        .section-main {
+            margin-bottom: 24px;
+        }
+
+        .section-main h3 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .section-main .muted {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .exp-item {
+            margin-bottom: 12px;
+        }
+
+        .exp-item .company {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .exp-item .role {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .bullets {
+            margin-top: 6px;
+            margin-left: 16px;
+        }
+
+        .bullets li {
+            font-size: 13px;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        /* small print adjustments */
+        small {
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <aside class="sidebar">
+            <div class="photo">
+                <% if (resume?.personalInfo?.photo) { %>
+                    <img src="<%= resume.personalInfo.photo %>" alt="photo" />
+                    <% } else { %>
+                        <div style="font-size:12px;color:#374151">No Photo</div>
+                        <% } %>
+            </div>
+
+            <div class="section">
+                <h4>Contact</h4>
+                <p>
+                    <%= resume?.personalInfo?.address || "" %>
+                </p>
+                <p>
+                    <%= resume?.personalInfo?.phone || "" %>
+                </p>
+                <p>
+                    <%= resume?.personalInfo?.email || "" %>
+                </p>
+            </div>
+
+            <div class="section">
+                <h4>Skills</h4>
+                <ul style="padding-left: 18px; margin:0;">
+                    <% (Array.isArray(resume.skills) ? resume.skills : []).slice(0, 20).forEach(function(s){ %>
+                        <li>
+                            <%= s %>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h4>Languages</h4>
+                <ul style="padding-left: 18px; margin:0;">
+                    <% (Array.isArray(resume.languages) ? resume.languages : []).forEach(function(l){ %>
+                        <li>
+                            <%= l %>
+                        </li>
+                        <% }) %>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1 class="name">
+                <%= resume?.personalInfo?.fullName || "Your Name" %>
+            </h1>
+            <div class="title">
+                <%= resume?.personalInfo?.title || "" %>
+            </div>
+            <div class="divider"></div>
+
+            <div class="section-main">
+                <h3>Profile</h3>
+                <div class="muted">
+                    <%= resume?.summary || "" %>
+                </div>
+            </div>
+
+            <div class="section-main">
+                <h3>Experience</h3>
+                <% (Array.isArray(resume.experience) ? resume.experience : []).forEach(function(exp){ %>
+                    <div class="exp-item">
+                        <div class="company">
+                            <%= exp.company || "" %>
+                        </div>
+                        <div class="role">
+                            <%= exp.position || "" %> — <small>
+                                    <%= exp.startDate || "" %> to <%= exp.endDate || "" %>
+                                </small>
+                        </div>
+                        <% if (Array.isArray(exp.bullets) && exp.bullets.length) { %>
+                            <ul class="bullets">
+                                <% exp.bullets.forEach(function(b){ %>
+                                    <li>
+                                        <%= b %>
+                                    </li>
+                                    <% }) %>
+                            </ul>
+                            <% } %>
+                    </div>
+                    <% }) %>
+            </div>
+
+            <div class="section-main">
+                <h3>Education</h3>
+                <% (Array.isArray(resume.education) ? resume.education : []).forEach(function(ed){ %>
+                    <div class="exp-item">
+                        <div class="company">
+                            <%= ed.institution || "" %>
+                        </div>
+                        <div class="role">
+                            <%= ed.degree || "" %> — <small>
+                                    <%= ed.startDate || "" %> to <%= ed.endDate || "" %>
+                                </small>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

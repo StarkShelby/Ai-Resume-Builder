@@ -1,0 +1,27 @@
+{
+  "name": "resume-builder-monorepo",
+  "version": "1.0.0",
+  "description": "Full-stack Resume Checker + Resume Maker application",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "coockies": "^1.0.1",
+    "groq-sdk": "^0.35.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
+    "pdf-extraction": "^1.0.2",
+    "turndown": "^7.2.2"
+  }
+}
