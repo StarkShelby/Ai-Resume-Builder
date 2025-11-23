@@ -21,6 +21,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ResumeData, TemplateProps } from "./types";
 import Navbar from "@/components/Navbar";
+import { motion } from "framer-motion";
 
 /* ------------------------------------------------------------------ */
 /*                       TEMPLATE REGISTRY                            */
@@ -31,7 +32,7 @@ const resumeTemplates = [
   { key: "resume_01", name: "Modern Blue", component: Template01, image: "/templates/resume_01_v2.png" },
   { key: "resume_02", name: "Clean Geometric", component: Template02, image: "/templates/resume_02_v2.png" },
   { key: "resume_03", name: "Sidebar Dark", component: Template03, image: "/templates/resume_03_v2.png" },
-  { key: "resume_04", name: "Bold Red", component: Template04, image: "/templates/resume_04_v2.png" },
+  { key: "resume_04", name: "Bold Red", component: Template04, image: "/templates/resume04.png" },
   { key: "resume_05", name: "Business Purple", component: Template05, image: "/templates/resume_05_v2.png" },
   { key: "resume_06", name: "Classic Green", component: Template06, image: "/templates/resume_06_v2.png" },
 ];
@@ -207,6 +208,12 @@ export default function CreatePage() {
 
       // 1. SECTION IS ARRAY (experience, education, skills, bullets, etc.)
       if (Array.isArray(newData[section])) {
+        // Special case: replacing entire array (e.g., after remove operation)
+        if (field === null && index === undefined && Array.isArray(value)) {
+          (newData as any)[section] = value;
+          return newData;
+        }
+
         if (index === undefined) return newData; // invalid case
 
         // If the array item is a string (skills, languages)
@@ -331,26 +338,60 @@ export default function CreatePage() {
   /* ---------------- Template Selection Screen ---------------- */
   if (!template) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6">
-        <h2 className="text-3xl font-bold mb-6">Choose a Template</h2>
+      <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gray-50 font-sans">
+        {/* Animated Background */}
+        <div className="fixed inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 z-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-          {resumeTemplates.map((tpl) => (
-            <button
-              key={tpl.key}
-              onClick={() => setTemplate(tpl.key)}
-              className="border p-4 rounded-lg hover:shadow-xl transition flex flex-col items-center bg-white overflow-hidden"
-            >
-              <div className="w-full aspect-[210/297] overflow-hidden rounded-md border mb-4 bg-gray-50 relative">
-                <img
-                  src={(tpl as any).image}
-                  alt={tpl.name}
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <p className="text-center font-semibold text-lg">{tpl.name}</p>
-            </button>
-          ))}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-12 flex flex-col items-center">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+              Choose Your Template
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Select a professional design to get started. You can easily switch templates later.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            {resumeTemplates.map((tpl, index) => (
+              <motion.button
+                key={tpl.key}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                onClick={() => setTemplate(tpl.key)}
+                whileHover={{ scale: 1.02, y: -5 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative bg-gradient-to-br from-white via-purple-50/50 to-blue-50/50 backdrop-blur-xl p-6 rounded-3xl border border-white/60 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 flex flex-col items-center text-left hover:border-purple-300/50"
+              >
+                <div className="w-full aspect-[210/297] overflow-hidden rounded-2xl border border-gray-100 mb-6 bg-gray-50 relative shadow-inner group-hover:shadow-md transition-all">
+                  <img
+                    src={(tpl as any).image}
+                    alt={tpl.name}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                    <span className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-full font-medium text-sm shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      Select Template
+                    </span>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">{tpl.name}</h3>
+                  <p className="text-sm text-gray-500 mt-1">Professional & Clean</p>
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </div>
       </div>
     );

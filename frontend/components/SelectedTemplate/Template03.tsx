@@ -236,8 +236,7 @@ export default function Template03({
     return (
         <div
             id="resume-content"
-            className="max-w-4xl mx-auto shadow-lg bg-white overflow-hidden"
-            style={{ minHeight: 800 }}
+            className="w-[210mm] min-h-[297mm] mx-auto shadow-lg bg-white overflow-hidden"
         >
             {/* Header Section - Teal/Turquoise */}
             <header className="bg-gradient-to-r from-[#2c7873] to-[#3d9b96] text-white p-8">

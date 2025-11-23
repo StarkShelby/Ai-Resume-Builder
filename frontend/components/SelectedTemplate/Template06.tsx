@@ -215,8 +215,7 @@ export default function Template06({
     return (
         <div
             id="resume-content"
-            className="max-w-4xl mx-auto shadow-lg bg-white overflow-hidden"
-            style={{ minHeight: 800 }}
+            className="w-[210mm] min-h-[297mm] mx-auto shadow-lg bg-white overflow-hidden"
         >
             {/* Header with Dark Green Background */}
             <header className="bg-[#2d5016] text-white p-8">
