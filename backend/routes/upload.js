@@ -16,8 +16,11 @@ router.post("/upload", upload.single("file"), async (req, res) => {
 
     return res.json({ text });
   } catch (err) {
-    console.error("Extraction error:", err);
-    return res.status(500).json({ message: "Failed to extract resume text" });
+    console.error("Extraction error in /upload route:", err);
+    return res.status(500).json({
+      message: "Failed to extract resume text. Please ensure the file is a text-based PDF or DOCX.",
+      error: err.message
+    });
   }
 });
 

@@ -577,35 +577,43 @@ export default function Template05({
                                         </div>
 
                                         <div className="text-sm text-gray-600 ml-4">
-                                            <input
-                                                type="date"
-                                                value={exp.startDate || ""}
-                                                disabled={previewMode}
-                                                onChange={(e) =>
-                                                    updateArrayField(
-                                                        "experience",
-                                                        idx,
-                                                        "startDate",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="border rounded px-2 py-1 text-xs"
-                                            />
-                                            <span className="mx-1">-</span>
-                                            <input
-                                                type="date"
-                                                value={exp.endDate || ""}
-                                                disabled={previewMode}
-                                                onChange={(e) =>
-                                                    updateArrayField(
-                                                        "experience",
-                                                        idx,
-                                                        "endDate",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="border rounded px-2 py-1 text-xs"
-                                            />
+                                            <div className="text-sm text-gray-600 ml-4">
+                                                {previewMode ? (
+                                                    <span className="text-xs">
+                                                        {exp.startDate} - {exp.endDate}
+                                                    </span>
+                                                ) : (
+                                                    <>
+                                                        <input
+                                                            type="date"
+                                                            value={exp.startDate || ""}
+                                                            onChange={(e) =>
+                                                                updateArrayField(
+                                                                    "experience",
+                                                                    idx,
+                                                                    "startDate",
+                                                                    e.target.value
+                                                                )
+                                                            }
+                                                            className="border rounded px-2 py-1 text-xs"
+                                                        />
+                                                        <span className="mx-1">-</span>
+                                                        <input
+                                                            type="date"
+                                                            value={exp.endDate || ""}
+                                                            onChange={(e) =>
+                                                                updateArrayField(
+                                                                    "experience",
+                                                                    idx,
+                                                                    "endDate",
+                                                                    e.target.value
+                                                                )
+                                                            }
+                                                            className="border rounded px-2 py-1 text-xs"
+                                                        />
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
 
@@ -875,35 +883,41 @@ export default function Template05({
                                         </div>
 
                                         <div className="text-sm text-gray-600 ml-4">
-                                            <input
-                                                type="date"
-                                                value={edu.startDate || ""}
-                                                disabled={previewMode}
-                                                onChange={(e) =>
-                                                    updateArrayField(
-                                                        "education",
-                                                        idx,
-                                                        "startDate",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="border rounded px-2 py-1 text-xs"
-                                            />
-                                            <span className="mx-1">-</span>
-                                            <input
-                                                type="date"
-                                                value={edu.endDate || ""}
-                                                disabled={previewMode}
-                                                onChange={(e) =>
-                                                    updateArrayField(
-                                                        "education",
-                                                        idx,
-                                                        "endDate",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="border rounded px-2 py-1 text-xs"
-                                            />
+                                            {previewMode ? (
+                                                <span className="text-xs">
+                                                    {edu.startDate} - {edu.endDate}
+                                                </span>
+                                            ) : (
+                                                <>
+                                                    <input
+                                                        type="date"
+                                                        value={edu.startDate || ""}
+                                                        onChange={(e) =>
+                                                            updateArrayField(
+                                                                "education",
+                                                                idx,
+                                                                "startDate",
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="border rounded px-2 py-1 text-xs"
+                                                    />
+                                                    <span className="mx-1">-</span>
+                                                    <input
+                                                        type="date"
+                                                        value={edu.endDate || ""}
+                                                        onChange={(e) =>
+                                                            updateArrayField(
+                                                                "education",
+                                                                idx,
+                                                                "endDate",
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="border rounded px-2 py-1 text-xs"
+                                                    />
+                                                </>
+                                            )}
                                         </div>
                                     </div>
 

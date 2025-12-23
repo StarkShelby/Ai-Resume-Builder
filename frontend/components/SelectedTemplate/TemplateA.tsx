@@ -31,26 +31,7 @@ export default function TemplateA({
     }
   };
 
-  if (previewMode) {
-    return (
-      <div
-        className="border rounded-lg p-4 bg-white max-w-sm mx-auto shadow-md flex flex-col gap-2"
-        style={{ minHeight: 200, opacity: 0.8 }}
-      >
-        <div className="h-4 w-1/2 bg-gray-800 rounded mb-2"></div>
-        <div className="h-3 w-1/3 bg-gray-400 rounded mb-4"></div>
-        <div className="space-y-2">
-          <div className="h-2 w-full bg-gray-200 rounded"></div>
-          <div className="h-2 w-full bg-gray-200 rounded"></div>
-          <div className="h-2 w-3/4 bg-gray-200 rounded"></div>
-        </div>
-        <div className="mt-4">
-          <div className="h-3 w-1/4 bg-gray-600 rounded mb-2"></div>
-          <div className="h-2 w-full bg-gray-200 rounded"></div>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="p-8 bg-white text-gray-800 font-sans w-[210mm] min-h-[297mm]" id="resume-content">

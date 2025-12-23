@@ -133,15 +133,17 @@ export default function EditorPage() {
         {
           title: resumeData.personalInfo.fullName || "My Resume",
           data: { ...resumeData, __template: template },
+          template: template, // Include template field at top level
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       toast.success("Resume saved!");
-      router.push("/dashboard");
-    } catch (err) {
+      // router.push("/dashboard"); // Stay on page after save
+    } catch (err: any) {
       console.error("Save failed:", err);
-      toast.error("Failed to save resume.");
+      console.error("Error response:", err.response?.data);
+      toast.error(`Failed to save resume: ${err.response?.data?.error || err.message}`);
     } finally {
       setSaving(false);
     }
@@ -149,57 +151,38 @@ export default function EditorPage() {
 
   /* ---------------- PDF Export ---------------- */
   const handleExportPdf = async () => {
-    if (!resumeContainerRef.current) return;
-
-    const element = resumeContainerRef.current;
-
-    // Load html2pdf
-    const html2pdf = (await import("html2pdf.js")).default;
-
-    const fileName = `${resumeData.personalInfo.fullName || 'resume'}.pdf`;
-
-    // Hide all buttons before export
-    const buttons = element.querySelectorAll('button');
-    const inputs = element.querySelectorAll('input[type="file"], input[type="date"]');
-
-    buttons.forEach(btn => {
-      (btn as HTMLElement).style.display = 'none';
-    });
-    inputs.forEach(input => {
-      (input as HTMLElement).style.display = 'none';
-    });
-
-    const opt = {
-      margin: 0,
-      filename: fileName,
-      image: { type: 'jpeg' as const, quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-      },
-      jsPDF: {
-        unit: 'mm' as const,
-        format: 'a4' as const,
-        orientation: 'portrait' as const
-      },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-
     try {
-      await html2pdf().set(opt).from(element).save();
-      toast.success('PDF exported successfully!');
-    } catch (error) {
-      console.error('PDF export failed:', error);
-      toast.error('Failed to export PDF');
-    } finally {
-      // Show buttons again
-      buttons.forEach(btn => {
-        (btn as HTMLElement).style.display = '';
+      toast.loading("Saving and generating PDF...", { id: "export-toast" }); // Show loading toast
+
+      // 1. Auto-save first ensuring backend has latest data
+      await handleSave();
+
+      // 2. Trigger backend export
+      const token = Cookies.get("token");
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/resumes/${resumeId}/export`;
+
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: "blob", // Important for handling binary data
       });
-      inputs.forEach(input => {
-        (input as HTMLElement).style.display = '';
-      });
+
+      // 3. Download the blob
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${resumeData.personalInfo.fullName || "resume"}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+
+      toast.success("PDF exported successfully!", { id: "export-toast" });
+    } catch (err: any) {
+      console.error("PDF export failed:", err);
+      toast.error(`Export failed: ${err.message}`, { id: "export-toast" });
     }
   };
 

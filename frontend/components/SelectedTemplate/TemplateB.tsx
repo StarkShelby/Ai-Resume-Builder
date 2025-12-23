@@ -57,21 +57,8 @@ export default function TemplateB({
   };
 
   // -----------------------------
-  // PREVIEW
+  // MAIN TEMPLATE
   // -----------------------------
-
-  if (previewMode) {
-    return (
-      <div className="border-2 border-blue-400 rounded-lg p-4 bg-blue-50 max-w-sm mx-auto shadow">
-        <h3 className="text-lg font-bold text-blue-900 mb-2">
-          Modern Colorful
-        </h3>
-        <div className="text-blue-400 text-sm">
-          Vibrant and modern design, stand out with color.
-        </div>
-      </div>
-    );
-  }
 
   // -----------------------------
   // MAIN TEMPLATE

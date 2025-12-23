@@ -16,11 +16,21 @@ import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import TemplateA from "@/components/SelectedTemplate/TemplateA";
 import TemplateB from "@/components/SelectedTemplate/TemplateB";
 import Template01 from "@/components/SelectedTemplate/Template01";
+import Template02 from "@/components/SelectedTemplate/Template02";
+import Template03 from "@/components/SelectedTemplate/Template03";
+import Template04 from "@/components/SelectedTemplate/Template04";
+import Template05 from "@/components/SelectedTemplate/Template05";
+import Template06 from "@/components/SelectedTemplate/Template06";
 
 const templateRegistry: any = {
     templateA: TemplateA,
     templateB: TemplateB,
     resume_01: Template01,
+    resume_02: Template02,
+    resume_03: Template03,
+    resume_04: Template04,
+    resume_05: Template05,
+    resume_06: Template06,
 };
 
 import { motion } from "framer-motion"; // Required for potential future animations or consistent styling
@@ -77,10 +87,10 @@ export default function ResumeCheckerPage() {
     // -------- LOAD SAVED RESUME ----------
     useEffect(() => {
         if (!resumeId) {
-            setError(
-                "No resume ID provided. Please navigate from the dashboard or create a new resume."
-            );
-            console.log("No resumeId in URL params.");
+            // Only set error if we are expecting a resume ID but don't have one (e.g. not just visiting /checker)
+            // Actually, typical flow is visiting /checker implies upload or checker
+            // We can silently ignore missing ID if user wants to upload
+            console.log("No resumeId in URL params - waiting for upload.");
             return;
         }
 
@@ -235,7 +245,7 @@ export default function ResumeCheckerPage() {
         if (!savedResume) return null;
 
         const TemplateComponent = templateRegistry[savedResume.template];
-        if (!TemplateComponent) return <p>Template not found</p>;
+        if (!TemplateComponent) return <p>Template not found: {savedResume.template}</p>;
 
         return (
             <TemplateComponent
@@ -352,8 +362,33 @@ export default function ResumeCheckerPage() {
                                     {renderSavedPreview()}
                                 </div>
                             ) : fileURL && uploadedFile ? (
-                                <div className="w-full flex justify-center">
-                                    {/* Existing upload preview viewer here */}
+                                <div className="w-full h-full flex justify-center items-center bg-gray-100 relative">
+                                    {uploadedFile.type === "application/pdf" ? (
+                                        <iframe
+                                            src={fileURL}
+                                            className="w-full h-full"
+                                            title="PDF Preview"
+                                        />
+                                    ) : uploadedFile.type.startsWith("image/") ? (
+                                        <img
+                                            src={fileURL}
+                                            alt="Resume Preview"
+                                            className="max-w-full max-h-full object-contain"
+                                        />
+                                    ) : (
+                                        <div className="text-center p-4">
+                                            <p className="mb-4 text-gray-600">
+                                                Preview not available for this file type.
+                                            </p>
+                                            <a
+                                                href={fileURL}
+                                                download={uploadedFile.name}
+                                                className="text-blue-600 underline"
+                                            >
+                                                Download {uploadedFile.name}
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             ) : (
                                 <p className="text-gray-400 text-center mt-20">

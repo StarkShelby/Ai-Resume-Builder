@@ -16,9 +16,19 @@ function cleanText(text) {
 
 // ---- PDF Extractor (using pdf-extraction for Node.js compatibility) ----
 async function extractPDFText(buffer) {
-  const data = await extract(buffer);
-  // pdf-extraction returns text property
-  return cleanText(data.text);
+  try {
+    const data = await extract(buffer);
+    // pdf-extraction returns text property
+    const text = cleanText(data.text);
+    console.log(`[extractPDFText] Extracted ${text.length} characters.`);
+    if (text.length < 50) {
+      console.warn("[extractPDFText] Warning: Text extracted is very short. Possible scanned PDF?");
+    }
+    return text;
+  } catch (err) {
+    console.error("[extractPDFText] Error extracting PDF text:", err);
+    throw err;
+  }
 }
 
 // ---- DOCX Extractor (using mammoth to HTML then Turndown to Markdown) ----
@@ -48,6 +58,7 @@ async function extractImageText(buffer) {
 
 // Main function to extract text based on file type
 async function extractTextFromFile(fileBuffer, mimetype) {
+  console.log(`[extractTextFromFile] Processing file of type: ${mimetype}`);
   if (mimetype === "application/pdf") {
     return await extractPDFText(fileBuffer);
   } else if (
@@ -60,6 +71,7 @@ async function extractTextFromFile(fileBuffer, mimetype) {
   } else if (mimetype.startsWith("image/")) {
     return await extractImageText(fileBuffer);
   } else {
+    console.error(`[extractTextFromFile] Unsupported mime type: ${mimetype}`);
     throw new Error("Unsupported file type for text extraction.");
   }
 }

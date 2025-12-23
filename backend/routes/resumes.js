@@ -151,6 +151,8 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
+const ejs = require("ejs");
+
 /* ===================================================
    EXPORT PDF
 =================================================== */
@@ -166,7 +168,15 @@ router.get("/:id/export", auth, async (req, res) => {
         .status(404)
         .json({ success: false, error: "Resume not found" });
 
-    const pdf = await pdfService.generatePDF(resume.data, resume.template);
+    // FIX: Render frontend view via Puppeteer for exact WYSIWYG PDF
+    // We need to pass the auth token so Puppeteer can fetch resume details on the frontend
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+
+    if (!token) {
+      return res.status(401).json({ success: false, error: "No auth token found for PDF generation" });
+    }
+
+    const pdf = await pdfService.generatePDF(resume._id, token);
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
