@@ -7,6 +7,9 @@ const resumeRoutes = require("./routes/resumes");
 
 const app = express();
 
+// Trust proxy for Render/Heroku functionality
+app.set("trust proxy", 1);
+
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
