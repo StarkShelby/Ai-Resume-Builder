@@ -164,7 +164,7 @@ export default function SignupPage() {
                     name="name"
                     type="text"
                     required
-                    className="block w-full pl-12 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
+                    className="block w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -188,7 +188,7 @@ export default function SignupPage() {
                     name="email"
                     type="email"
                     required
-                    className="block w-full pl-12 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
+                    className="block w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                     placeholder="you@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -212,7 +212,7 @@ export default function SignupPage() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    className="block w-full pl-12 pr-12 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
+                    className="block w-full pl-12 pr-12 py-3.5 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -238,13 +238,13 @@ export default function SignupPage() {
                 {formData.password && (
                   <div className="mt-2">
                     <div className="flex items-center gap-2 mb-1">
-                      <div className="flex-1 h-1.5 bg-white/20 rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                         <div
                           className={`h-full ${passwordStrength.color} transition-all duration-300`}
                           style={{ width: `${(passwordStrength.strength / 5) * 100}%` }}
                         ></div>
                       </div>
-                      <span className="text-xs text-white/80 font-medium">{passwordStrength.label}</span>
+                      <span className="text-xs text-gray-600 font-medium">{passwordStrength.label}</span>
                     </div>
                   </div>
                 )}
@@ -266,7 +266,7 @@ export default function SignupPage() {
                     name="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
                     required
-                    className="block w-full pl-12 pr-12 py-3.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent transition-all duration-200"
+                    className="block w-full pl-12 pr-12 py-3.5 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                     placeholder="••••••••"
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
@@ -320,9 +320,9 @@ export default function SignupPage() {
 
             {/* Footer */}
             <div className="mt-6 text-center">
-              <p className="text-white/80 text-sm">
+              <p className="text-gray-600 text-sm">
                 Already have an account?{" "}
-                <Link href="/login" className="font-semibold text-white hover:text-white/90 underline underline-offset-2 transition-colors">
+                <Link href="/login" className="font-semibold text-purple-600 hover:text-purple-700 underline underline-offset-2 transition-colors">
                   Sign in
                 </Link>
               </p>
@@ -330,7 +330,7 @@ export default function SignupPage() {
           </div>
 
           {/* Additional Info */}
-          <p className="mt-6 text-center text-white/60 text-xs">
+          <p className="mt-6 text-center text-gray-500 text-xs">
             By creating an account, you agree to our Terms of Service and Privacy Policy
           </p>
         </div>
