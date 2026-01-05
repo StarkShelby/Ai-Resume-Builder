@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+        `https://ai-resume-builder-v2.onrender.com/api/auth/login`,
         formData
       );
 
@@ -76,7 +76,7 @@ export default function LoginPage() {
             {/* OAuth Buttons */}
             <div className="space-y-3 mb-6">
               <a
-                href={`${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`}
+                href={`https://ai-resume-builder-v2.onrender.com/api/auth/google`}
                 className="group w-full flex items-center justify-center gap-3 px-4 py-3.5 bg-white hover:bg-gray-50 text-gray-700 rounded-xl font-medium transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
