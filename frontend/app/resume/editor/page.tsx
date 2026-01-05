@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -49,7 +49,7 @@ const DEFAULT_RESUME: ResumeData = {
 /* ================================================================== */
 /*                         MAIN COMPONENT                             */
 /* ================================================================== */
-export default function EditorPage() {
+function EditorPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const resumeId = searchParams.get("id");
@@ -363,5 +363,13 @@ export default function EditorPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function EditorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <EditorPageContent />
+    </Suspense>
   );
 }

@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -39,7 +39,7 @@ import { motion } from "framer-motion"; // Required for potential future animati
 import Link from "next/link"; // Not strictly needed for background, but good practice if adding links
 import CollapsibleSection from "@/components/CollapsibleSection"; // Ensure this import is present
 
-export default function ResumeCheckerPage() {
+function ResumeCheckerContent() {
     const router = useRouter();
     const params = useSearchParams();
     const resumeId = params.get("id");
@@ -594,5 +594,13 @@ export default function ResumeCheckerPage() {
                 </div>
             </main>
         </section>
+    );
+}
+
+export default function ResumeCheckerPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <ResumeCheckerContent />
+        </Suspense>
     );
 }

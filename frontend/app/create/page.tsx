@@ -3,7 +3,7 @@
 export const dynamic = "force-dynamic";
 
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
@@ -89,7 +89,7 @@ function normalizeResumePayload(apiPayload: any): ResumeData {
 /* ================================================================== */
 /*                  MAINCOMPONENT                             */
 /* ================================================================== */
-export default function CreatePage() {
+function CreatePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const resumeId = searchParams.get("id");
@@ -447,5 +447,13 @@ export default function CreatePage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function CreatePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <CreatePageContent />
+    </Suspense>
   );
 }
