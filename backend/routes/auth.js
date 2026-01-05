@@ -106,7 +106,7 @@ router.get(
       { expiresIn: "7d" }
     );
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard?token=${token}`);
+    res.redirect(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/dashboard?token=${token}`);
   }
 );
 
@@ -126,7 +126,7 @@ router.get(
       { expiresIn: "7d" }
     );
     // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL || "http://localhost:3000"}/dashboard?token=${token}`);
+    res.redirect(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/dashboard?token=${token}`);
   }
 );
 
