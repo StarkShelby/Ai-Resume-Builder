@@ -284,7 +284,7 @@ export default function Template01({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="bg-white text-gray-800 px-3 py-1 rounded"
+                className="bg-white text-gray-800 px-3 py-1 rounded no-print"
               >
                 Upload Photo
               </button>
@@ -378,7 +378,7 @@ export default function Template01({
                   {!previewMode && (
                     <button
                       onClick={() => handleRemove("skills", i)}
-                      className="ml-2 text-xs text-red-300"
+                      className="ml-2 text-xs text-red-300 no-print"
                     >
                       ×
                     </button>
@@ -389,7 +389,7 @@ export default function Template01({
             {!previewMode && (
               <button
                 onClick={() => handleAdd("skills")}
-                className="mt-3 text-sm bg-white text-gray-800 px-3 py-1 rounded"
+                className="mt-3 text-sm bg-white text-gray-800 px-3 py-1 rounded no-print"
               >
                 + Add Skill
               </button>
@@ -418,7 +418,7 @@ export default function Template01({
                   {!previewMode && (
                     <button
                       onClick={() => handleRemove("languages", i)}
-                      className="ml-2 text-xs text-red-300"
+                      className="ml-2 text-xs text-red-300 no-print"
                     >
                       ×
                     </button>
@@ -429,7 +429,7 @@ export default function Template01({
             {!previewMode && (
               <button
                 onClick={() => handleAdd("languages")}
-                className="mt-3 text-sm bg-white text-gray-800 px-3 py-1 rounded"
+                className="mt-3 text-sm bg-white text-gray-800 px-3 py-1 rounded no-print"
               >
                 + Add Language
               </button>
@@ -458,7 +458,7 @@ export default function Template01({
                   {!previewMode && (
                     <button
                       onClick={() => handleRemove("hobbies", i)}
-                      className="ml-2 text-xs text-red-300"
+                      className="ml-2 text-xs text-red-300 no-print"
                     >
                       ×
                     </button>
@@ -469,7 +469,7 @@ export default function Template01({
             {!previewMode && (
               <button
                 onClick={() => handleAdd("hobbies")}
-                className="mt-3 text-sm bg-white text-gray-800 px-3 py-1 rounded"
+                className="mt-3 text-sm bg-white text-gray-800 px-3 py-1 rounded no-print"
               >
                 + Add Hobby
               </button>
@@ -527,7 +527,7 @@ export default function Template01({
               {!previewMode && (
                 <button
                   onClick={() => handleAdd("experience")}
-                  className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-md hover:bg-blue-200"
+                  className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-md hover:bg-blue-200 no-print"
                 >
                   + Add Experience
                 </button>
@@ -673,7 +673,7 @@ export default function Template01({
                         {!previewMode && (
                           <button
                             onClick={() => removeBulletPoint(idx, bIdx)}
-                            className="text-xs text-red-500 hover:underline"
+                            className="text-xs text-red-500 hover:underline no-print"
                           >
                             Remove
                           </button>
@@ -684,7 +684,7 @@ export default function Template01({
                     {!previewMode && (
                       <button
                         onClick={() => addBulletPoint(idx)}
-                        className="text-sm text-blue-600 hover:underline mt-1"
+                        className="text-sm text-blue-600 hover:underline mt-1 no-print"
                       >
                         + Add Bullet Point
                       </button>
@@ -696,7 +696,7 @@ export default function Template01({
                     <div className="mt-4 text-right">
                       <button
                         onClick={() => handleRemove("experience", idx)}
-                        className="text-xs text-red-500 hover:underline"
+                        className="text-xs text-red-500 hover:underline no-print"
                       >
                         Remove Experience
                       </button>
@@ -718,7 +718,7 @@ export default function Template01({
               {!previewMode && (
                 <button
                   onClick={() => handleAdd("projects")}
-                  className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-md hover:bg-blue-200"
+                  className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-md hover:bg-blue-200 no-print"
                 >
                   + Add Project
                 </button>

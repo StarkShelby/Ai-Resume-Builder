@@ -313,7 +313,7 @@ export default function Template06({
                         <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="bg-white text-[#2d5016] px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100"
+                            className="bg-white text-[#2d5016] px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100 no-print"
                         >
                             Upload Photo
                         </button>
@@ -350,7 +350,7 @@ export default function Template06({
                                 {!previewMode && (
                                     <button
                                         onClick={() => handleAdd("experience")}
-                                        className="text-xs bg-[#2d5016] text-white px-2 py-1 rounded"
+                                        className="text-xs bg-[#2d5016] text-white px-2 py-1 rounded no-print"
                                     >
                                         + Add
                                     </button>
@@ -481,7 +481,7 @@ export default function Template06({
                                                     {!previewMode && (
                                                         <button
                                                             onClick={() => removeBulletPoint(idx, bIdx)}
-                                                            className="text-xs text-red-500"
+                                                            className="text-xs text-red-500 no-print"
                                                         >
                                                             ×
                                                         </button>
@@ -492,7 +492,7 @@ export default function Template06({
                                             {!previewMode && (
                                                 <button
                                                     onClick={() => addBulletPoint(idx)}
-                                                    className="text-xs text-[#2d5016] hover:underline"
+                                                    className="text-xs text-[#2d5016] hover:underline no-print"
                                                 >
                                                     + Bullet
                                                 </button>
@@ -502,7 +502,7 @@ export default function Template06({
                                         {!previewMode && (
                                             <button
                                                 onClick={() => handleRemove("experience", idx)}
-                                                className="text-xs text-red-500 hover:underline mt-2"
+                                                className="text-xs text-red-500 hover:underline mt-2 no-print"
                                             >
                                                 Remove
                                             </button>
@@ -521,7 +521,7 @@ export default function Template06({
                                 {!previewMode && (
                                     <button
                                         onClick={() => handleAdd("projects")}
-                                        className="text-xs bg-[#2d5016] text-white px-2 py-1 rounded"
+                                        className="text-xs bg-[#2d5016] text-white px-2 py-1 rounded no-print"
                                     >
                                         + Add
                                     </button>
@@ -613,7 +613,7 @@ export default function Template06({
                                             <div className="mt-2 text-right">
                                                 <button
                                                     onClick={() => handleRemove("projects", idx)}
-                                                    className="text-xs text-red-500 hover:underline"
+                                                    className="text-xs text-red-500 hover:underline no-print"
                                                 >
                                                     Remove Project
                                                 </button>
@@ -631,7 +631,7 @@ export default function Template06({
                                 {!previewMode && (
                                     <button
                                         onClick={() => handleAdd("education")}
-                                        className="text-xs bg-[#2d5016] text-white px-2 py-1 rounded"
+                                        className="text-xs bg-[#2d5016] text-white px-2 py-1 rounded no-print"
                                     >
                                         + Add
                                     </button>
@@ -743,7 +743,7 @@ export default function Template06({
                                         {!previewMode && (
                                             <button
                                                 onClick={() => handleRemove("education", idx)}
-                                                className="text-xs text-red-500 hover:underline mt-1"
+                                                className="text-xs text-red-500 hover:underline mt-1 no-print"
                                             >
                                                 Remove
                                             </button>
@@ -793,7 +793,7 @@ export default function Template06({
                             {!previewMode && (
                                 <button
                                     onClick={() => handleAdd("skills")}
-                                    className="mt-2 text-xs bg-[#2d5016] text-white px-2 py-1 rounded w-full"
+                                    className="mt-2 text-xs bg-[#2d5016] text-white px-2 py-1 rounded w-full no-print"
                                 >
                                     + Add
                                 </button>
@@ -824,7 +824,7 @@ export default function Template06({
                                         {!previewMode && (
                                             <button
                                                 onClick={() => handleRemove("languages", i)}
-                                                className="ml-2 text-xs text-red-500"
+                                                className="ml-2 text-xs text-red-500 no-print"
                                             >
                                                 ×
                                             </button>
@@ -835,7 +835,7 @@ export default function Template06({
                             {!previewMode && (
                                 <button
                                     onClick={() => handleAdd("languages")}
-                                    className="mt-2 text-xs bg-[#2d5016] text-white px-2 py-1 rounded w-full"
+                                    className="mt-2 text-xs bg-[#2d5016] text-white px-2 py-1 rounded w-full no-print"
                                 >
                                     + Add
                                 </button>
@@ -866,7 +866,7 @@ export default function Template06({
                                         {!previewMode && (
                                             <button
                                                 onClick={() => handleRemove("hobbies", i)}
-                                                className="ml-2 text-xs text-red-500"
+                                                className="ml-2 text-xs text-red-500 no-print"
                                             >
                                                 ×
                                             </button>
@@ -877,7 +877,7 @@ export default function Template06({
                             {!previewMode && (
                                 <button
                                     onClick={() => handleAdd("hobbies")}
-                                    className="mt-2 text-xs bg-[#2d5016] text-white px-2 py-1 rounded w-full"
+                                    className="mt-2 text-xs bg-[#2d5016] text-white px-2 py-1 rounded w-full no-print"
                                 >
                                     + Add
                                 </button>
