@@ -520,7 +520,7 @@ export default function Template03({
                         </div>
 
                         <div className="space-y-5">
-                            {experience.length === 0 && (
+                            {experience.length === 0 && !previewMode && (
                                 <div className="text-sm text-gray-400 italic no-print">
                                     No experience added yet.
                                 </div>
@@ -690,7 +690,7 @@ export default function Template03({
                         </div>
 
                         <div className="space-y-5">
-                            {data?.projects?.length === 0 && (
+                            {data?.projects?.length === 0 && !previewMode && (
                                 <div className="text-sm text-gray-400 italic no-print">
                                     No projects added yet.
                                 </div>
@@ -802,7 +802,7 @@ export default function Template03({
                         </div>
 
                         <div className="space-y-4">
-                            {education.length === 0 && (
+                            {education.length === 0 && !previewMode && (
                                 <div className="text-sm text-gray-400 italic no-print">
                                     No education added yet.
                                 </div>

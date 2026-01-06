@@ -548,7 +548,7 @@ export default function Template02({
                         </div>
 
                         <div className="space-y-6">
-                            {experience.length === 0 && (
+                            {experience.length === 0 && !previewMode && (
                                 <div className="text-sm text-gray-400 italic no-print">
                                     No experience added yet. Click "Add Experience" to begin.
                                 </div>
@@ -838,7 +838,7 @@ export default function Template02({
                         </div>
 
                         <div className="space-y-6">
-                            {education.length === 0 && (
+                            {education.length === 0 && !previewMode && (
                                 <div className="text-sm text-gray-400 italic no-print">
                                     No education added yet. Click "Add Education" to begin.
                                 </div>

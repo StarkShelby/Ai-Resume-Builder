@@ -38,7 +38,7 @@ export default function TemplateA({
       {/* Header */}
       <header className="border-b-2 border-gray-800 pb-6 mb-6">
         <div
-          contentEditable
+          contentEditable={!previewMode}
           suppressContentEditableWarning
           onBlur={(e) =>
             handleInput("personalInfo", "fullName", e.currentTarget.innerText)
@@ -48,7 +48,7 @@ export default function TemplateA({
           {data?.personalInfo?.fullName || "JOHN SMITH"}
         </div>
         <div
-          contentEditable
+          contentEditable={!previewMode}
           suppressContentEditableWarning
           onBlur={(e) =>
             handleInput("personalInfo", "jobTitle", e.currentTarget.innerText)
@@ -62,7 +62,7 @@ export default function TemplateA({
           <div className="flex items-center gap-2">
             <Phone size={14} />
             <span
-              contentEditable
+              contentEditable={!previewMode}
               suppressContentEditableWarning
               onBlur={(e) =>
                 handleInput("personalInfo", "phone", e.currentTarget.innerText)
@@ -75,7 +75,7 @@ export default function TemplateA({
           <div className="flex items-center gap-2">
             <Mail size={14} />
             <span
-              contentEditable
+              contentEditable={!previewMode}
               suppressContentEditableWarning
               onBlur={(e) =>
                 handleInput("personalInfo", "email", e.currentTarget.innerText)
@@ -88,7 +88,7 @@ export default function TemplateA({
           <div className="flex items-center gap-2">
             <Linkedin size={14} />
             <span
-              contentEditable
+              contentEditable={!previewMode}
               suppressContentEditableWarning
               onBlur={(e) =>
                 handleInput(
@@ -105,7 +105,7 @@ export default function TemplateA({
           <div className="flex items-center gap-2">
             <Twitter size={14} />
             <span
-              contentEditable
+              contentEditable={!previewMode}
               suppressContentEditableWarning
               onBlur={(e) =>
                 handleInput(
@@ -124,7 +124,7 @@ export default function TemplateA({
             <div className="flex items-center gap-2 col-span-2">
               <MapPin size={14} />
               <span
-                contentEditable
+                contentEditable={!previewMode}
                 suppressContentEditableWarning
                 onBlur={(e) =>
                   handleInput(
@@ -145,7 +145,7 @@ export default function TemplateA({
       {/* Summary */}
       <section className="mb-6">
         <div
-          contentEditable
+          contentEditable={!previewMode}
           suppressContentEditableWarning
           onBlur={(e) =>
             handleInput("summary", "summary", e.currentTarget.innerText)
@@ -166,13 +166,15 @@ export default function TemplateA({
             </span>
             Experience
           </h2>
-          <button
-            onClick={() => onAdd && onAdd("experience")}
-            className="text-blue-600 hover:text-blue-800 no-print"
-            title="Add Experience"
-          >
-            <Plus size={18} />
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onAdd && onAdd("experience")}
+              className="text-blue-600 hover:text-blue-800 no-print"
+              title="Add Experience"
+            >
+              <Plus size={18} />
+            </button>
+          )}
         </div>
 
         <div className="space-y-5">
@@ -181,7 +183,7 @@ export default function TemplateA({
               <div className="flex flex-col sm:flex-row sm:justify-between mb-1">
                 <div className="flex-1">
                   <div
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput(
@@ -196,7 +198,7 @@ export default function TemplateA({
                     {exp.position || "Senior Project Manager"}
                   </div>
                   <div
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput(
@@ -213,7 +215,7 @@ export default function TemplateA({
                 </div>
                 <div className="text-sm text-gray-600 font-semibold whitespace-nowrap sm:text-right">
                   <span
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput("experience", "startDate", e.currentTarget.innerText, index)
@@ -224,7 +226,7 @@ export default function TemplateA({
                   </span>
                   {" - "}
                   <span
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput("experience", "endDate", e.currentTarget.innerText, index)
@@ -240,7 +242,7 @@ export default function TemplateA({
                 {exp.bullets?.map((bullet: string, bIndex: number) => (
                   <li key={bIndex} className="pl-1 relative group/bullet">
                     <div
-                      contentEditable
+                      contentEditable={!previewMode}
                       suppressContentEditableWarning
                       onBlur={(e) =>
                         handleInput(
@@ -265,37 +267,43 @@ export default function TemplateA({
                     >
                       {bullet || "Responsible for creating, improving, and developing IT project strategies."}
                     </div>
-                    <button
-                      onClick={() => {
-                        const newBullets = [...(exp.bullets || [])];
-                        newBullets.splice(bIndex, 1);
-                        handleInput("experience", "bullets", newBullets, index);
-                      }}
-                      className="absolute -left-6 top-0 text-red-400 opacity-0 group-hover/bullet:opacity-100 no-print"
-                      title="Remove Bullet"
-                    >
-                      <Trash2 size={12} />
-                    </button>
+                    {!previewMode && (
+                      <button
+                        onClick={() => {
+                          const newBullets = [...(exp.bullets || [])];
+                          newBullets.splice(bIndex, 1);
+                          handleInput("experience", "bullets", newBullets, index);
+                        }}
+                        className="absolute -left-6 top-0 text-red-400 opacity-0 group-hover/bullet:opacity-100 no-print"
+                        title="Remove Bullet"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={() => {
-                  const newBullets = [...(exp.bullets || []), "New bullet point"];
-                  handleInput("experience", "bullets", newBullets, index);
-                }}
-                className="text-xs text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity no-print"
-              >
-                + Add Bullet
-              </button>
+              {!previewMode && (
+                <button
+                  onClick={() => {
+                    const newBullets = [...(exp.bullets || []), "New bullet point"];
+                    handleInput("experience", "bullets", newBullets, index);
+                  }}
+                  className="text-xs text-blue-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity no-print"
+                >
+                  + Add Bullet
+                </button>
+              )}
 
-              <button
-                onClick={() => onRemove && onRemove("experience", index)}
-                className="absolute top-0 right-0 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 no-print"
-                title="Remove Position"
-              >
-                <Trash2 size={16} />
-              </button>
+              {!previewMode && (
+                <button
+                  onClick={() => onRemove && onRemove("experience", index)}
+                  className="absolute top-0 right-0 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 no-print"
+                  title="Remove Position"
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -310,13 +318,15 @@ export default function TemplateA({
             </span>
             Education
           </h2>
-          <button
-            onClick={() => onAdd && onAdd("education")}
-            className="text-blue-600 hover:text-blue-800 no-print"
-            title="Add Education"
-          >
-            <Plus size={18} />
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onAdd && onAdd("education")}
+              className="text-blue-600 hover:text-blue-800 no-print"
+              title="Add Education"
+            >
+              <Plus size={18} />
+            </button>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -326,7 +336,7 @@ export default function TemplateA({
                 <div className="flex-1">
                   <div className="font-bold text-gray-900">
                     <span
-                      contentEditable
+                      contentEditable={!previewMode}
                       suppressContentEditableWarning
                       onBlur={(e) =>
                         handleInput("education", "degree", e.currentTarget.innerText, index)
@@ -337,7 +347,7 @@ export default function TemplateA({
                     </span>
                     {", "}
                     <span
-                      contentEditable
+                      contentEditable={!previewMode}
                       suppressContentEditableWarning
                       onBlur={(e) =>
                         handleInput("education", "institution", e.currentTarget.innerText, index)
@@ -350,7 +360,7 @@ export default function TemplateA({
                 </div>
                 <div className="text-sm text-gray-600 font-semibold whitespace-nowrap">
                   <span
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput("education", "startDate", e.currentTarget.innerText, index)
@@ -361,7 +371,7 @@ export default function TemplateA({
                   </span>
                   {" - "}
                   <span
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput("education", "endDate", e.currentTarget.innerText, index)
@@ -375,7 +385,7 @@ export default function TemplateA({
               {/* Optional description or bullets for education if needed, usually not in this specific design but good to have placeholders if data exists */}
               {edu.description && (
                 <div
-                  contentEditable
+                  contentEditable={!previewMode}
                   suppressContentEditableWarning
                   onBlur={(e) =>
                     handleInput("education", "description", e.currentTarget.innerText, index)
@@ -386,13 +396,15 @@ export default function TemplateA({
                 </div>
               )}
 
-              <button
-                onClick={() => onRemove && onRemove("education", index)}
-                className="absolute top-0 right-0 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 no-print"
-                title="Remove Education"
-              >
-                <Trash2 size={16} />
-              </button>
+              {!previewMode && (
+                <button
+                  onClick={() => onRemove && onRemove("education", index)}
+                  className="absolute top-0 right-0 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 no-print"
+                  title="Remove Education"
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -407,20 +419,22 @@ export default function TemplateA({
             </span>
             Skills
           </h2>
-          <button
-            onClick={() => onAdd && onAdd("skills")}
-            className="text-blue-600 hover:text-blue-800 no-print"
-            title="Add Skill"
-          >
-            <Plus size={18} />
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onAdd && onAdd("skills")}
+              className="text-blue-600 hover:text-blue-800 no-print"
+              title="Add Skill"
+            >
+              <Plus size={18} />
+            </button>
+          )}
         </div>
         <div className="space-y-2">
           {data?.skills?.map((skill: string, index: number) => (
             <div key={index} className="flex items-start group">
               <div className="w-full">
                 <div
-                  contentEditable
+                  contentEditable={!previewMode}
                   suppressContentEditableWarning
                   onBlur={(e) =>
                     handleInput("skills", "", e.currentTarget.innerText, index)
@@ -436,12 +450,14 @@ export default function TemplateA({
                             Given current schema is string[], we stick to that.
                         */}
               </div>
-              <button
-                onClick={() => onRemove && onRemove("skills", index)}
-                className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 no-print"
-              >
-                <Trash2 size={14} />
-              </button>
+              {!previewMode && (
+                <button
+                  onClick={() => onRemove && onRemove("skills", index)}
+                  className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 no-print"
+                >
+                  <Trash2 size={14} />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -456,13 +472,15 @@ export default function TemplateA({
             </span>
             Projects
           </h2>
-          <button
-            onClick={() => onAdd && onAdd("projects")}
-            className="text-blue-600 hover:text-blue-800 no-print"
-            title="Add Project"
-          >
-            <Plus size={18} />
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onAdd && onAdd("projects")}
+              className="text-blue-600 hover:text-blue-800 no-print"
+              title="Add Project"
+            >
+              <Plus size={18} />
+            </button>
+          )}
         </div>
         <div className="space-y-4">
           {data?.projects?.map((project: any, index: number) => (
@@ -470,7 +488,7 @@ export default function TemplateA({
               <div className="flex justify-between items-baseline mb-1">
                 <div className="font-bold text-gray-900">
                   <span
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       handleInput("projects", "name", e.currentTarget.innerText, index)
@@ -483,7 +501,7 @@ export default function TemplateA({
                 {project.link && (
                   <div className="text-sm text-blue-600">
                     <span
-                      contentEditable
+                      contentEditable={!previewMode}
                       suppressContentEditableWarning
                       onBlur={(e) =>
                         handleInput("projects", "link", e.currentTarget.innerText, index)
@@ -496,7 +514,7 @@ export default function TemplateA({
                 )}
               </div>
               <div
-                contentEditable
+                contentEditable={!previewMode}
                 suppressContentEditableWarning
                 onBlur={(e) =>
                   handleInput("projects", "description", e.currentTarget.innerText, index)
@@ -506,7 +524,7 @@ export default function TemplateA({
                 {project.description || "Project description goes here."}
               </div>
               <div
-                contentEditable
+                contentEditable={!previewMode}
                 suppressContentEditableWarning
                 onBlur={(e) =>
                   handleInput("projects", "technologies", e.currentTarget.innerText, index)
@@ -516,13 +534,15 @@ export default function TemplateA({
                 {project.technologies || "Technologies used"}
               </div>
 
-              <button
-                onClick={() => onRemove && onRemove("projects", index)}
-                className="absolute top-0 right-0 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 no-print"
-                title="Remove Project"
-              >
-                <Trash2 size={16} />
-              </button>
+              {!previewMode && (
+                <button
+                  onClick={() => onRemove && onRemove("projects", index)}
+                  className="absolute top-0 right-0 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 no-print"
+                  title="Remove Project"
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -537,19 +557,21 @@ export default function TemplateA({
             </span>
             Software
           </h2>
-          <button
-            onClick={() => onAdd && onAdd("software")}
-            className="text-blue-600 hover:text-blue-800 no-print"
-            title="Add Software"
-          >
-            <Plus size={18} />
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onAdd && onAdd("software")}
+              className="text-blue-600 hover:text-blue-800 no-print"
+              title="Add Software"
+            >
+              <Plus size={18} />
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-2 gap-4">
           {data?.software?.map((soft: string, index: number) => (
             <div key={index} className="flex items-center justify-between group">
               <div
-                contentEditable
+                contentEditable={!previewMode}
                 suppressContentEditableWarning
                 onBlur={(e) =>
                   handleInput("software" as any, "", e.currentTarget.innerText, index)
@@ -558,12 +580,14 @@ export default function TemplateA({
               >
                 {soft || "Microsoft Project"}
               </div>
-              <button
-                onClick={() => onRemove && onRemove("software", index)}
-                className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 no-print"
-              >
-                <Trash2 size={14} />
-              </button>
+              {!previewMode && (
+                <button
+                  onClick={() => onRemove && onRemove("software", index)}
+                  className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity ml-2 no-print"
+                >
+                  <Trash2 size={14} />
+                </button>
+              )}
             </div>
           ))}
         </div>

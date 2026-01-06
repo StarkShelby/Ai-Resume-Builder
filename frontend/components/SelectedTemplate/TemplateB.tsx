@@ -68,7 +68,7 @@ export default function TemplateB({
     <div className="p-8 bg-white shadow-lg w-[210mm] min-h-[297mm]" id="resume-content">
       {/* NAME */}
       <div
-        contentEditable
+        contentEditable={!previewMode}
         suppressContentEditableWarning
         className="text-3xl font-bold text-blue-800 mb-2"
         onBlur={(e) =>
@@ -80,7 +80,7 @@ export default function TemplateB({
 
       {/* EMAIL */}
       <div
-        contentEditable
+        contentEditable={!previewMode}
         suppressContentEditableWarning
         onBlur={(e) =>
           handleInput("personalInfo", "email", e.currentTarget.innerText)
@@ -92,7 +92,7 @@ export default function TemplateB({
 
       {/* PHONE */}
       <div
-        contentEditable
+        contentEditable={!previewMode}
         suppressContentEditableWarning
         onBlur={(e) =>
           handleInput("personalInfo", "phone", e.currentTarget.innerText)
@@ -109,7 +109,7 @@ export default function TemplateB({
         Professional Summary
       </h2>
       <div
-        contentEditable
+        contentEditable={!previewMode}
         suppressContentEditableWarning
         onBlur={(e) => handleInput("summary", "", e.currentTarget.innerText)}
       >
@@ -119,12 +119,14 @@ export default function TemplateB({
       {/* EXPERIENCE HEADER */}
       <div className="flex justify-between items-center mt-4 mb-2">
         <h2 className="text-xl font-semibold text-blue-900">Work Experience</h2>
-        <button
-          onClick={() => onAdd && onAdd("experience")}
-          className="bg-blue-500 text-white px-2 py-1 rounded no-print"
-        >
-          +
-        </button>
+        {!previewMode && (
+          <button
+            onClick={() => onAdd && onAdd("experience")}
+            className="bg-blue-500 text-white px-2 py-1 rounded no-print"
+          >
+            +
+          </button>
+        )}
       </div>
 
       {/* EXPERIENCE LIST */}
@@ -132,7 +134,7 @@ export default function TemplateB({
         <div key={index} className="mb-4 relative">
           {/* POSITION */}
           <div
-            contentEditable
+            contentEditable={!previewMode}
             suppressContentEditableWarning
             className="font-bold text-blue-700"
             onBlur={(e) =>
@@ -149,7 +151,7 @@ export default function TemplateB({
 
           {/* COMPANY */}
           <div
-            contentEditable
+            contentEditable={!previewMode}
             suppressContentEditableWarning
             onBlur={(e) =>
               handleInput(
@@ -170,7 +172,7 @@ export default function TemplateB({
                 <li key={bIndex} className="text-sm flex gap-2">
                   <span>•</span>
                   <div
-                    contentEditable
+                    contentEditable={!previewMode}
                     suppressContentEditableWarning
                     onBlur={(e) =>
                       updateBulletPoint(
@@ -185,49 +187,57 @@ export default function TemplateB({
                   </div>
 
                   {/* Remove bullet */}
-                  <button
-                    onClick={() => removeBulletPoint(index, bIndex)}
-                    className="text-red-500 text-xs ml-2 no-print"
-                  >
-                    Remove
-                  </button>
+                  {!previewMode && (
+                    <button
+                      onClick={() => removeBulletPoint(index, bIndex)}
+                      className="text-red-500 text-xs ml-2 no-print"
+                    >
+                      Remove
+                    </button>
+                  )}
                 </li>
               ))}
           </ul>
 
           {/* ADD BULLET BUTTON */}
-          <button
-            onClick={() => addBulletPoint(index)}
-            className="text-sm text-blue-500 no-print"
-          >
-            + Add Bullet
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => addBulletPoint(index)}
+              className="text-sm text-blue-500 no-print"
+            >
+              + Add Bullet
+            </button>
+          )}
 
           {/* REMOVE EXPERIENCE */}
-          <button
-            onClick={() => onRemove && onRemove("experience", index)}
-            className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded no-print"
-          >
-            -
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onRemove && onRemove("experience", index)}
+              className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded no-print"
+            >
+              -
+            </button>
+          )}
         </div>
       ))}
 
       {/* PROJECTS SECTION */}
       <div className="flex justify-between items-center mt-4 mb-2">
         <h2 className="text-xl font-semibold text-blue-900">Projects</h2>
-        <button
-          onClick={() => onAdd && onAdd("projects")}
-          className="bg-blue-500 text-white px-2 py-1 rounded no-print"
-        >
-          +
-        </button>
+        {!previewMode && (
+          <button
+            onClick={() => onAdd && onAdd("projects")}
+            className="bg-blue-500 text-white px-2 py-1 rounded no-print"
+          >
+            +
+          </button>
+        )}
       </div>
 
       {data?.projects?.map((proj: any, index: number) => (
         <div key={index} className="mb-4 relative">
           <div
-            contentEditable
+            contentEditable={!previewMode}
             suppressContentEditableWarning
             onBlur={(e) =>
               handleInput(
@@ -243,7 +253,7 @@ export default function TemplateB({
           </div>
 
           <div
-            contentEditable
+            contentEditable={!previewMode}
             suppressContentEditableWarning
             onBlur={(e) =>
               handleInput(
@@ -260,7 +270,7 @@ export default function TemplateB({
 
           {proj.link && (
             <div
-              contentEditable
+              contentEditable={!previewMode}
               suppressContentEditableWarning
               onBlur={(e) =>
                 handleInput(
@@ -276,30 +286,34 @@ export default function TemplateB({
             </div>
           )}
 
-          <button
-            onClick={() => onRemove && onRemove("projects", index)}
-            className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded no-print"
-          >
-            -
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onRemove && onRemove("projects", index)}
+              className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded no-print"
+            >
+              -
+            </button>
+          )}
         </div>
       ))}
 
       {/* EDUCATION SECTION */}
       <div className="flex justify-between items-center mt-4 mb-2">
         <h2 className="text-xl font-semibold text-blue-900">Education</h2>
-        <button
-          onClick={() => onAdd && onAdd("education")}
-          className="bg-blue-500 text-white px-2 py-1 rounded no-print"
-        >
-          +
-        </button>
+        {!previewMode && (
+          <button
+            onClick={() => onAdd && onAdd("education")}
+            className="bg-blue-500 text-white px-2 py-1 rounded no-print"
+          >
+            +
+          </button>
+        )}
       </div>
 
       {data?.education?.map((edu: any, index: number) => (
         <div key={index} className="mb-4 relative">
           <div
-            contentEditable
+            contentEditable={!previewMode}
             suppressContentEditableWarning
             onBlur={(e) =>
               handleInput(
@@ -315,7 +329,7 @@ export default function TemplateB({
           </div>
 
           <div
-            contentEditable
+            contentEditable={!previewMode}
             suppressContentEditableWarning
             onBlur={(e) =>
               handleInput(
@@ -329,12 +343,14 @@ export default function TemplateB({
             {edu.institution || "Institution Name"}
           </div>
 
-          <button
-            onClick={() => onRemove && onRemove("education", index)}
-            className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded no-print"
-          >
-            -
-          </button>
+          {!previewMode && (
+            <button
+              onClick={() => onRemove && onRemove("education", index)}
+              className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded no-print"
+            >
+              -
+            </button>
+          )}
         </div>
       ))}
     </div>

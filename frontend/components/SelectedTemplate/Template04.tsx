@@ -637,7 +637,7 @@ export default function Template04({
                             </div>
 
                             <div className="space-y-4">
-                                {shouldRenderPlaceholderEducation ? (
+                                {shouldRenderPlaceholderEducation && !previewMode ? (
                                     <div className="pb-3 border-b border-gray-200 last:border-0">
                                         <div
                                             contentEditable={!previewMode}
