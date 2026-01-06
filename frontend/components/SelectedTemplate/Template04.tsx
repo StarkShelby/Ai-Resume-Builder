@@ -887,10 +887,10 @@ export default function Template04({
 
                             {!previewMode && (
                                 <div className="mt-3 space-y-2 no-print">
-                                    <button onClick={() => safeAdd("languages")} className="text-sm bg-[#2D5E98] text-white px-3 py-1 rounded w-full hover:bg-[#1e4a7a]">
+                                    <button onClick={() => safeAdd("languages")} className="text-sm bg-[#2D5E98] text-white px-3 py-1 rounded w-full hover:bg-[#1e4a7a] no-print">
                                         + Add Language
                                     </button>
-                                    <button onClick={() => safeAdd("hobbies")} className="text-sm bg-[#2D5E98] text-white px-3 py-1 rounded w-full hover:bg-[#1e4a7a]">
+                                    <button onClick={() => safeAdd("hobbies")} className="text-sm bg-[#2D5E98] text-white px-3 py-1 rounded w-full hover:bg-[#1e4a7a] no-print">
                                         + Add Skill
                                     </button>
                                 </div>

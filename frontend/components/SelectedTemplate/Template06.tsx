@@ -782,7 +782,7 @@ export default function Template06({
                                         {!previewMode && (
                                             <button
                                                 onClick={() => handleRemove("skills", i)}
-                                                className="ml-2 text-xs text-red-500"
+                                                className="ml-2 text-xs text-red-500 no-print"
                                             >
                                                 ×
                                             </button>

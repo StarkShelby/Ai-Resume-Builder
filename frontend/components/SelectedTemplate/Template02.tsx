@@ -673,7 +673,7 @@ export default function Template02({
                                                 {!previewMode && (
                                                     <button
                                                         onClick={() => removeBulletPoint(idx, bIdx)}
-                                                        className="text-xs text-red-500 hover:underline"
+                                                        className="text-xs text-red-500 hover:underline no-print"
                                                     >
                                                         Remove
                                                     </button>
@@ -810,7 +810,7 @@ export default function Template02({
                                         <div className="mt-3 text-right">
                                             <button
                                                 onClick={() => handleRemove("projects", idx)}
-                                                className="text-xs text-red-500 hover:underline"
+                                                className="text-xs text-red-500 hover:underline no-print"
                                             >
                                                 Remove Project
                                             </button>
@@ -830,7 +830,7 @@ export default function Template02({
                             {!previewMode && (
                                 <button
                                     onClick={() => handleAdd("education")}
-                                    className="text-sm bg-[#1e3a5f] text-white px-3 py-1.5 rounded-md hover:bg-[#2d5a8f]"
+                                    className="text-sm bg-[#1e3a5f] text-white px-3 py-1.5 rounded-md hover:bg-[#2d5a8f] no-print"
                                 >
                                     + Add Education
                                 </button>
@@ -959,7 +959,7 @@ export default function Template02({
                                         <div className="mt-3 text-right">
                                             <button
                                                 onClick={() => handleRemove("education", idx)}
-                                                className="text-xs text-red-500 hover:underline"
+                                                className="text-xs text-red-500 hover:underline no-print"
                                             >
                                                 Remove Education
                                             </button>
