@@ -6,7 +6,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import axios from "axios";
+import { api } from "@/lib/api";
 import toast from "react-hot-toast";
 import AuthNavbar from "@/components/AuthNavbar";
 import ResumePreview from "@/components/ResumePreview";
@@ -92,15 +92,7 @@ function DashboardPageContent() {
     try {
       const token = Cookies.get("token");
 
-      console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
-      console.log("TOKEN:", token);
-
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/resumes`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await api.get("/api/resumes");
 
       console.log("RESUME FETCH RESPONSE:", response.data);
 
@@ -124,13 +116,7 @@ function DashboardPageContent() {
     if (!confirm("Are you sure you want to delete this resume?")) return;
 
     try {
-      const token = Cookies.get("token");
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/resumes/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await api.delete(`/api/resumes/${id}`);
       toast.success("Resume deleted");
       fetchResumes();
     } catch (error) {
@@ -140,14 +126,9 @@ function DashboardPageContent() {
 
   const handleExportPDF = async (id: string) => {
     try {
-      const token = Cookies.get("token");
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/resumes/${id}/export`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          responseType: "blob",
-        }
-      );
+      const response = await api.get(`/api/resumes/${id}/export`, {
+        responseType: "blob",
+      });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");

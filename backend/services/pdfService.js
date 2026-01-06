@@ -14,17 +14,25 @@ exports.generatePDF = async (resumeId, token) => {
     const page = await browser.newPage();
 
     // Set the authentication cookie so the frontend can fetch data
-    // Domain should ideally be localhost or the domain of the frontend
+    // Frontend URL - default to localhost if not set
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
+    // Extract domain for cookie (remove protocol and port)
+    // e.g., https://myapp.vercel.app -> myapp.vercel.app
+    let cookieDomain = "localhost";
+    try {
+      const urlObj = new URL(frontendUrl);
+      cookieDomain = urlObj.hostname;
+    } catch (e) {
+      console.log("Error parsing frontend URL for cookie domain:", e);
+    }
+
     await page.setCookie({
       name: "token",
       value: token,
-      domain: "localhost", // Adjust if running in different environment
+      domain: cookieDomain,
       path: "/",
     });
-
-    // Frontend URL - assuming localhost:3000 for local dev
-    // In production, this should be an environment variable
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
     const printUrl = `${frontendUrl}/resume/print/${resumeId}`;
 
     console.log(`Generating PDF from: ${printUrl}`);
@@ -33,8 +41,8 @@ exports.generatePDF = async (resumeId, token) => {
       waitUntil: "networkidle0", // Wait until all API requests finish
     });
 
-    // Optional: wait for a specific element to ensure rendering is done
-    // await page.waitForSelector("#print-container");
+    // CRITICAL: Wait for the main resume container to ensure data is loaded/rendered
+    await page.waitForSelector("#print-container", { timeout: 10000 });
 
     const pdf = await page.pdf({
       format: "A4",

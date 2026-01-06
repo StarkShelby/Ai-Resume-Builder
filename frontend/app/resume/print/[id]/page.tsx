@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Cookies from "js-cookie";
-import axios from "axios";
+import { api } from "@/lib/api";
 import TemplateA from "@/components/SelectedTemplate/TemplateA";
 import TemplateB from "@/components/SelectedTemplate/TemplateB";
 import Template01 from "@/components/SelectedTemplate/Template01";
@@ -45,12 +45,7 @@ export default function PrintPage() {
                 const token = Cookies.get("token");
 
                 // If this page is hit by Puppeteer, the token cookie must be set in the browser context
-                const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/resumes/details/${resumeId}`,
-                    {
-                        headers: token ? { Authorization: `Bearer ${token}` } : {},
-                    }
-                );
+                const res = await api.get(`/api/resumes/details/${resumeId}`);
 
                 if (res.data.success) {
                     const data = res.data.data;
