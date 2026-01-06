@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL || "https://ai-resume-builder-v2.onrender.com"}/api/auth/login`,
+        "https://ai-resume-builder-v2.onrender.com/api/auth/login",
         formData
       );
 

@@ -56,7 +56,7 @@ export default function SignupPage() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL || "https://ai-resume-builder-v2.onrender.com"}/api/auth/signup`,
+        "https://ai-resume-builder-v2.onrender.com/api/auth/signup",
         {
           name: formData.name,
           email: formData.email,
