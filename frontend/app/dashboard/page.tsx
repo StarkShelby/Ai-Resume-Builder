@@ -130,6 +130,13 @@ function DashboardPageContent() {
         responseType: "blob",
       });
 
+      // Check if we got a JSON response (error) instead of PDF
+      if (response.headers["content-type"]?.includes("application/json")) {
+        const text = await (response.data as Blob).text();
+        const json = JSON.parse(text);
+        throw new Error(json.error || "Export failed");
+      }
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -138,8 +145,26 @@ function DashboardPageContent() {
       link.click();
       link.remove();
       toast.success("PDF downloaded successfully!");
-    } catch (error) {
-      toast.error("Failed to export PDF");
+    } catch (error: any) {
+      console.error("Export error:", error);
+      let msg = "Failed to export PDF";
+
+      // If axios returns a blob error response, we need to read it
+      if (error.response?.data instanceof Blob) {
+        try {
+          const text = await error.response.data.text();
+          const json = JSON.parse(text);
+          if (json.error) msg = json.error;
+        } catch (e) {
+          // parse failed, stick to default msg
+        }
+      } else if (error.response?.data?.error) {
+        msg = error.response.data.error;
+      } else if (error.message) {
+        msg = error.message;
+      }
+
+      toast.error(msg);
     }
   };
 
