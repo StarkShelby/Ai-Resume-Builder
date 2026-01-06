@@ -7,32 +7,48 @@ const resumeRoutes = require("./routes/resumes");
 
 const app = express();
 
-// Trust proxy for Render/Heroku functionality
+/* REQUIRED FOR RENDER */
 app.set("trust proxy", 1);
 
-// Middleware
-app.use(cors({
-  origin: true, // Allow all origins (reflects request origin)
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
-}));
+/* CORS — MUST COME BEFORE ROUTES */
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://ai-resume-builder-frontend-v1-5ryszvxsb.vercel.app",
+  "https://ai-resume-builder-frontend-v1.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("CORS not allowed"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+/* HANDLE PREFLIGHT */
+app.options("*", cors());
+
 app.use(express.json({ limit: "10mb" }));
 require("./config/passport");
 
-// Connect DB
+/* DB */
 connectDB();
 
-// ROUTES
+/* ROUTES */
 app.use("/api/auth", authRoutes);
 app.use("/api/resumes", resumeRoutes);
 app.use("/api", require("./routes/upload"));
 
-// DEFAULT
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// START SERVER
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
