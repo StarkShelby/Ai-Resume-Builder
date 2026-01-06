@@ -3,28 +3,26 @@ const puppeteer = require("puppeteer");
 exports.generatePDF = async (resumeId, token) => {
   try {
     const browser = await puppeteer.launch({
-      headless: "new",
+      headless: true, // ✅ REQUIRED for Render
       args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-web-security",
+        "--disable-dev-shm-usage", // ✅ CRITICAL for Render
       ],
     });
 
     const page = await browser.newPage();
 
-    // Set the authentication cookie so the frontend can fetch data
-    // Frontend URL - default to localhost if not set
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const frontendUrl =
+      process.env.FRONTEND_URL || "http://localhost:3000";
 
-    // Extract domain for cookie (remove protocol and port)
-    // e.g., https://myapp.vercel.app -> myapp.vercel.app
     let cookieDomain = "localhost";
     try {
       const urlObj = new URL(frontendUrl);
       cookieDomain = urlObj.hostname;
     } catch (e) {
-      console.log("Error parsing frontend URL for cookie domain:", e);
+      console.log("Cookie domain parse error:", e);
     }
 
     await page.setCookie({
@@ -32,22 +30,31 @@ exports.generatePDF = async (resumeId, token) => {
       value: token,
       domain: cookieDomain,
       path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
-    const printUrl = `${frontendUrl}/resume/print/${resumeId}`;
 
+    const printUrl = `${frontendUrl}/resume/print/${resumeId}`;
     console.log(`Generating PDF from: ${printUrl}`);
 
     await page.goto(printUrl, {
-      waitUntil: "networkidle0", // Wait until all API requests finish
+      waitUntil: "networkidle0",
     });
 
-    // CRITICAL: Wait for the main resume container to ensure data is loaded/rendered
-    await page.waitForSelector("#print-container", { timeout: 10000 });
+    await page.waitForSelector("#print-container", {
+      timeout: 15000,
+    });
 
     const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
-      margin: { top: "0", bottom: "0" }, // specific templates might handle margins
+      margin: {
+        top: "0",
+        bottom: "0",
+        left: "0",
+        right: "0",
+      },
     });
 
     await browser.close();
